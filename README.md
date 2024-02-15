@@ -1,3 +1,7 @@
+Claro! Aqui está o README.md atualizado com as novas features:
+
+---
+
 # PyTerminal
 
 PyTerminal is an interactive terminal in Python that allows you to navigate the file system, create folders and files, and perform basic file management operations. It provides a user-friendly interface to interact with the file system using familiar terminal commands.
@@ -27,16 +31,20 @@ python pyterminal.py
 
 - `list`: Lists the contents of the current directory.
 - `cd <path>`: Navigates to the specified directory.
-- `create <name>`: Creates a file or folder. The command automatically determines whether to create a file or a folder. Multiple files or folders can be created at once by passing more than one parameter. For example:
+- `create <name>`: Creates a file or folder. The command automatically determines whether to create a file or a folder. It can create multiple folders, subfolders, and files with a single command. For example:
   ```bash
-  $ create folder1 folder2 main.py
+  $ create folder1/another_folder/etc.../file.py
   ```
-  This command will create folders named `folder1` and `folder2`, and a file named `main.py`.
-  It's also capable of creating a directory and a file inside that directory, for example:
+  or:
   ```bash
-  $ create folder1/main.py
+  $ create folder1/another_folder/file.py folder2/file2.py etc....
   ```
-- `del <item_name>` or `delete <item_name>`: Deletes the specified item (file or folder).
+- `del <item_name>` or `delete <item_name>`: Deletes the specified item (file or folder). It can delete multiple files or folders at once. Additionally, it can delete files or folders within a directory. For example:
+  ```bash
+  $ del folder1 folder2 main.py
+  $ del folder1/main.py
+  $ del folder1/folder2/main.py
+  ```
 - `clear` or `cls`: Clears the console screen.
 - `exit`: Exits PyTerminal.
 

@@ -20,12 +20,12 @@ def change_directory(directory):
 def create_item(*names):
     for name in names:
         if '/' in name:
-            directory, filename = name.split('/')
-            if directory not in os.listdir('.'):
-                os.mkdir(directory)
-            if filename:
-                with open(os.path.join(directory, filename), 'w'):
-                    pass
+            directories = name.split('/')
+            for i in range(len(directories) - 1):
+                if not os.path.exists('/'.join(directories[:i + 1])):
+                    os.mkdir('/'.join(directories[:i + 1]))
+            with open(name, 'w'):
+                pass
         else:
             if '.' in name:
                 with open(name, 'w'):
@@ -33,18 +33,30 @@ def create_item(*names):
             else:
                 os.mkdir(name)
 
-def delete_item(name):
-    try:
-        if os.path.isdir(name):
-            shutil.rmtree(name)
+def delete_item(*names):
+    for name in names:
+        if '/' in name:
+            if os.path.exists(name):
+                if os.path.isdir(name):
+                    shutil.rmtree(name)
+                else:
+                    os.remove(name)
+            else:
+                print("Item not found:", name)
         else:
-            os.remove(name)
-    except FileNotFoundError:
-        print("Item not found")
-    except PermissionError:
-        print("Permission denied to delete item")
-    else:
-        print("Item deleted successfully")
+            if os.path.exists(name):
+                if os.path.isdir(name):
+                    shutil.rmtree(name)
+                else:
+                    os.remove(name)
+            else:
+                for root, dirs, files in os.walk(".", topdown=False):
+                    for file in files:
+                        if file == name:
+                            os.remove(os.path.join(root, file))
+                    for dir in dirs:
+                        if dir == name:
+                            shutil.rmtree(os.path.join(root, dir))
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -71,8 +83,8 @@ def main():
             else:
                 print("Usage: create <name>")
         elif parts[0] == 'del' or parts[0] == 'delete':
-            if len(parts) == 2:
-                delete_item(parts[1])
+            if len(parts) >= 2:
+                delete_item(*parts[1:])
             else:
                 print("Usage: del <item_name>")
         elif parts[0] == 'clear' or parts[0] == 'cls':
