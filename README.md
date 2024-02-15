@@ -1,5 +1,3 @@
-Claro! Aqui está o README.md atualizado com as novas features:
-
 ---
 
 # PyTerminal
